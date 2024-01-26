@@ -7,6 +7,7 @@ const port = 3001;
 
 const app = express();
 const server = createServer(app);
+app.use(cors()); //using cors as a middleware
 
 const io = new Server(server, {
   cors: {
@@ -15,20 +16,20 @@ const io = new Server(server, {
     credentials: true,
   },
 });
-app.use(cors()); //using cors as a middleware
 
 app.get("/", (req, resp) => {
   resp.send("Hello");
 });
 
 io.on("connection", (socket) => {
-  console.log("connected", socket.id);
-  socket.on("disconnect", () => {
-    console.log("User", socket.id, "disconnected");
-  });
-
   socket.on("message", (data) => {
     console.log(data);
+    // io.emit("recieve-message", data);
+   socket.broadcast.emit("receive-message", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User", socket.id, "disconnected");
   });
 });
 
