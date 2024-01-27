@@ -24,8 +24,9 @@ app.get("/", (req, resp) => {
 io.on("connection", (socket) => {
   socket.on("message", (data) => {
     console.log(data);
-    // io.emit("recieve-message", data);
-   socket.broadcast.emit("receive-message", data);
+    // io.emit("receive-message", data);
+    // socket.broadcast.emit("receive-message", data);
+    io.to(data.room).emit("receive-message", data);
   });
 
   socket.on("disconnect", () => {
