@@ -22,6 +22,12 @@ app.get("/", (req, resp) => {
   resp.send("Hello");
 });
 
+// IO middleWare
+io.use((socket,next)=>{
+  // could be used for authentication
+  next();
+})
+
 io.on("connection", (socket) => {
   socket.on("message", (data) => {
     // io.emit("receive-message", data);
