@@ -26,7 +26,7 @@ io.on("connection", (socket) => {
   socket.on("message", (data) => {
     // io.emit("receive-message", data);
     // socket.broadcast.emit("receive-message", data);
-    io.to(data.room).emit("receive-message", data);
+    socket.broadcast.to(data.room).emit("receive-message", data);
   });
 
   socket.on("join-room", (room) => {
