@@ -15,7 +15,13 @@ const App = () => {
   const [socketId, setSocketId] = useState("");
   const [messages, setMessages] = useState([]);
   const [roomName, setRoomName] = useState("");
-  const socket = useMemo(() => io("http://localhost:3001"), []);
+  const socket = useMemo(
+    () =>
+      io("http://localhost:3001", {
+        withCredentials: true,
+      }),
+    []
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
